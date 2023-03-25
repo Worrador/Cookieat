@@ -23,21 +23,18 @@ int main() {
         nowide::cout << cell.value().get<std::string>() << '\n';
     }
 
-    // Close the document.
-    doc.close();
-
     while (1) {
         // Get random row number
-        std::uniform_int<> real_dist(1, rowCount);
-        auto random_number = real_dist(randomNumberGenerator);
+        std::uniform_int<> real_dist(2, rowCount);
+        auto random_row_number = real_dist(randomNumberGenerator);
 
         // Check recency sheet and generate acceptance based on it
-        auto& recency_value = ws_recency.cell(1, random_number).value();
+        auto recency_value = ws_recency.cell(random_row_number, 1).value().get<int>();
         std::uniform_int<> real_dist2(1, 100);
 
         if (recency_value < real_dist2(randomNumberGenerator)) {
-            nowide::cout << ws_recipes.cell(1, random_number).value().get<std::string>() << '\n';
-
+            auto pocs = ws_recipes.cell(random_row_number, 1).value().get<std::string>();
+            nowide::cout << pocs << std::endl;
             std::cout << "Do you want to eat this? (Y/N)" << std::endl;
             auto myChar = 'A';
             while (myChar != 'Y' && myChar != 'N') {
@@ -54,7 +51,8 @@ int main() {
 
     }
 
-
+    // Close the document.
+    doc.close();
     // Return 0 to indicate successful execution of the program.
     return 0;
 }
