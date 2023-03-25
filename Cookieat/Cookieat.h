@@ -6,5 +6,8 @@
 #include <iostream>
 #include <OpenXLSX.hpp>
 #include <nowide/iostream.hpp>
+#include <conio.h>
+#include <random>
 
 // TODO: Reference additional headers your program requires here.
+inline std::mt19937 randomNumberGenerator(std::random_device{}());
