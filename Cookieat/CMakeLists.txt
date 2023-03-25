@@ -22,7 +22,10 @@ add_subdirectory(OpenXLSX)
 # Cookieat.cpp and Cookieat.h
 add_executable(Cookieat "Cookieat.cpp" "Cookieat.h")
 
+# Copy the resources folder to the build output directory
+file(COPY ../Resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
 # Link the OpenXLSX library to the Cookieat executable target
 # using the target alias OpenXLSX::OpenXLSX
-target_link_libraries(Cookieat OpenXLSX::OpenXLSX)
+target_link_libraries(Cookieat OpenXLSX::OpenXLSX nowide::nowide)
 

@@ -3,16 +3,18 @@
 
 #include "Cookieat.h"
 
-int main()
-{
-	std::cout << "Hello CMake." << std::endl;
+
+int main() {
     OpenXLSX::XLDocument doc;
-    doc.create("Spreadsheet.xlsx");
-    auto wks = doc.workbook().worksheet("Sheet1");
+    doc.open("./Resources/Recipes.xlsx");
+    auto ws = doc.workbook().worksheet("Recipes");
 
-    wks.cell("A1").value() = "Hello, OpenXLSX!";
+    auto rng = ws.range(OpenXLSX::XLCellReference("A2"), OpenXLSX::XLCellReference(ws.rowCount(), 2));
 
-    doc.save();
+    for (auto& cell : rng) {
+        nowide::cout << cell.value().get<std::string>() << '\n';
+    }
 
+    doc.close();
     return 0;
 }
