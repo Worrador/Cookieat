@@ -7,7 +7,7 @@
 int main() {
     // Create an XLDocument object and open an existing Excel file named "Recipes.xlsx" located in the "./Resources" directory.
     OpenXLSX::XLDocument doc;
-    doc.open("./Resources/Recipes.xlsx");
+    doc.open("./Recipes.xlsx");
 
     // Access the worksheet named "Recipes" in the workbook.
     auto ws_recipes = doc.workbook().worksheet("Recipes");

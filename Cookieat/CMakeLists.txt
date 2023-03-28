@@ -20,12 +20,13 @@ add_subdirectory(OpenXLSX)
 
 # Create an executable target named Cookieat, which depends on the source files
 # Cookieat.cpp and Cookieat.h
-add_executable(Cookieat "Cookieat.cpp" "Cookieat.h")
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc")
+add_executable(Cook-i-eat "Cookieat.cpp" "Cookieat.h" ${APP_ICON_RESOURCE_WINDOWS})
 
 # Copy the resources folder to the build output directory
-file(COPY ../Resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+file(COPY ../Resources/Recipes.xlsx DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 # Link the OpenXLSX library to the Cookieat executable target
 # using the target alias OpenXLSX::OpenXLSX
-target_link_libraries(Cookieat OpenXLSX::OpenXLSX nowide::nowide)
+target_link_libraries(Cook-i-eat OpenXLSX::OpenXLSX nowide::nowide)
 
