@@ -38,6 +38,10 @@ int main() {
                 myChar = _getch();
             }
             if (myChar == 'Y') {
+                // Update recency
+                ws_recency.cell(random_row_number, 1).value().set(105);
+
+                // Open corresponding url
                 auto url = ws_recipes.cell(random_row_number, 2).value().get<std::string>();
                 ShellExecute(NULL, "open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
                 break;
@@ -49,9 +53,16 @@ int main() {
 
 
     }
+    // Update recencies
+    auto rng_recency = ws_recency.range(OpenXLSX::XLCellReference("A2"), OpenXLSX::XLCellReference(rowCount, 1));
+    for (auto& cell : rng_recency) {
+        cell.value().set(max(cell.value().get<int>() - 5, 0));
+    }
 
-    // Close the document.
+    // Save and close the document.
+    doc.save();
     doc.close();
+
     // Return 0 to indicate successful execution of the program.
     return 0;
 }
