@@ -18,10 +18,6 @@ int main() {
     // Define a range from the upper left corner to the cell in the lower right corner.
     auto rng = ws_recipes.range(OpenXLSX::XLCellReference("A2"), OpenXLSX::XLCellReference(rowCount, 1));
 
-    // Iterate through each cell in the range and output its value as a string using the 'get<std::string>()' method of the XLCellValue class.
-    for (auto& cell : rng) {
-        nowide::cout << cell.value().get<std::string>() << '\n';
-    }
 
     while (1) {
         // Get random row number
@@ -33,14 +29,17 @@ int main() {
         std::uniform_int<> real_dist2(1, 100);
 
         if (recency_value < real_dist2(randomNumberGenerator)) {
-            auto pocs = ws_recipes.cell(random_row_number, 1).value().get<std::string>();
-            nowide::cout << pocs << std::endl;
-            std::cout << "Do you want to eat this? (Y/N)" << std::endl;
+            auto recipe_name = ws_recipes.cell(random_row_number, 1).value().get<std::string>();
+            std::cout << "\033c";
+            std::cout << "Do you want to eat this? (Y/N)" << std::endl << "  \xC4\x10 ";
+            nowide::cout << recipe_name << std::endl;
             auto myChar = 'A';
             while (myChar != 'Y' && myChar != 'N') {
                 myChar = _getch();
             }
             if (myChar == 'Y') {
+                auto url = ws_recipes.cell(random_row_number, 2).value().get<std::string>();
+                ShellExecute(NULL, "open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
                 break;
             }
             else {
